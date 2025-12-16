@@ -24,7 +24,7 @@ public class OpenRestController {
     StartCalcResponseDTO dto = new StartCalcResponseDTO();
     dto.setId(id);
 
-    return new ResponseEntity<>(dto, HttpStatus.CREATED);
+    return new ResponseEntity<>(dto, HttpStatus.OK);
   }
 
   @PutMapping("info")
