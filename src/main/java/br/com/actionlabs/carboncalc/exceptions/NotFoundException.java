@@ -1,0 +1,7 @@
+package br.com.actionlabs.carboncalc.exceptions;
+
+public abstract class NotFoundException extends RuntimeException{
+    protected NotFoundException(String message) {
+        super(message);
+    }
+}

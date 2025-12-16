@@ -16,6 +16,7 @@ import br.com.actionlabs.carboncalc.repository.CarbonCalculationRepository;
 import br.com.actionlabs.carboncalc.repository.EnergyEmissionFactorRepository;
 import br.com.actionlabs.carboncalc.repository.SolidWasteEmissionFactorRepository;
 import br.com.actionlabs.carboncalc.repository.TransportationEmissionFactorRepository;
+import br.com.actionlabs.carboncalc.utils.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,17 +29,39 @@ public class CarbonCalculationService {
     private final SolidWasteEmissionFactorRepository solidWasteEmissionFactorRepository;
     private final TransportationEmissionFactorRepository transportationEmissionFactorRepository;
 
+    private final EmailValidator emailValidator;
+    private final NameValidator nameValidator;
+    private final PhoneNumberValidator phoneNumberValidator;
+    private final RecyclePercentageValidator recyclePercentageValidator;
+    private final UfValidator ufValidator;
+
     public CarbonCalculationService(CarbonCalculationRepository carbonCalculationRepository,
                                     EnergyEmissionFactorRepository energyEmissionFactorRepository,
                                     SolidWasteEmissionFactorRepository solidWasteEmissionFactorRepository,
-                                    TransportationEmissionFactorRepository transportationEmissionFactorRepository) {
+                                    TransportationEmissionFactorRepository transportationEmissionFactorRepository,
+                                    EmailValidator emailValidator,
+                                    NameValidator nameValidator,
+                                    PhoneNumberValidator phoneNumberValidator,
+                                    RecyclePercentageValidator recyclePercentageValidator,
+                                    UfValidator ufValidator) {
         this.carbonCalculationRepository = carbonCalculationRepository;
         this.energyEmissionFactorRepository = energyEmissionFactorRepository;
         this.solidWasteEmissionFactorRepository = solidWasteEmissionFactorRepository;
         this.transportationEmissionFactorRepository = transportationEmissionFactorRepository;
+        this.emailValidator = emailValidator;
+        this.nameValidator = nameValidator;
+        this.phoneNumberValidator = phoneNumberValidator;
+        this.recyclePercentageValidator = recyclePercentageValidator;
+        this.ufValidator = ufValidator;
     }
 
+
     public String startCalculation(StartCalcRequestDTO request) {
+        nameValidator.validateName(request.getName());
+        phoneNumberValidator.validatePhoneNumber(request.getPhoneNumber());
+        ufValidator.validateUf(request.getUf());
+        emailValidator.validateEmail(request.getEmail());
+
         CarbonCalculation carbonCalculation = new CarbonCalculation();
         carbonCalculation.setName(request.getName());
         carbonCalculation.setEmail(request.getEmail());
@@ -55,6 +78,8 @@ public class CarbonCalculationService {
         CarbonCalculation carbonCalculation = carbonCalculationRepository
                 .findById(request.getId())
                 .orElseThrow(() -> new CarbonCalculationNotFoundException(request.getId()));
+
+        recyclePercentageValidator.validate(request.getRecyclePercentage());
 
         carbonCalculation.setEnergyConsumption(request.getEnergyConsumption());
         carbonCalculation.setSolidWasteProduction(request.getSolidWasteTotal());
@@ -73,11 +98,16 @@ public class CarbonCalculationService {
                 .findById(id)
                 .orElseThrow(() -> new CarbonCalculationNotFoundException(id));
 
+        double energy = Math.round(carbonCalculation.getEnergyEmission() * 100.0) / 100.0;
+        double transportation = Math.round(carbonCalculation.getTransportationEmission() * 100.0) / 100.0;
+        double solidWaste = Math.round(carbonCalculation.getSolidWasteEmission() * 100.0) / 100.0;
+        double total = Math.round(carbonCalculation.getTotalEmission() * 100.0) / 100.0;
+
         CarbonCalculationResultDTO carbonCalculationDTO = new CarbonCalculationResultDTO();
-        carbonCalculationDTO.setEnergy(carbonCalculation.getEnergyEmission());
-        carbonCalculationDTO.setTransportation(carbonCalculation.getTransportationEmission());
-        carbonCalculationDTO.setSolidWaste(carbonCalculation.getSolidWasteEmission());
-        carbonCalculationDTO.setTotal(carbonCalculation.getTotalEmission());
+        carbonCalculationDTO.setEnergy(energy);
+        carbonCalculationDTO.setTransportation(transportation);
+        carbonCalculationDTO.setSolidWaste(solidWaste);
+        carbonCalculationDTO.setTotal(total);
 
         return carbonCalculationDTO;
     }
@@ -96,7 +126,7 @@ public class CarbonCalculationService {
 
     private void calculateEnergyEmissionFactor(CarbonCalculation carbonCalculation) {
         EnergyEmissionFactor energyEmissionFactor = energyEmissionFactorRepository
-                .findByUf(carbonCalculation.getUf())
+                .findById(carbonCalculation.getUf())
                 .orElseThrow(() -> new EnergyEmissionFactorNotFoundException(carbonCalculation.getUf()));
 
         Double emission = carbonCalculation.getEnergyConsumption() * energyEmissionFactor.getFactor();
@@ -115,7 +145,7 @@ public class CarbonCalculationService {
 
         for (TransportationDTO transportationDTO : transportationList) {
             TransportationEmissionFactor transportationEmissionFactor = transportationEmissionFactorRepository
-                    .findByType(transportationDTO.getType())
+                    .findById(transportationDTO.getType())
                     .orElseThrow(() -> new TransportationEmissionFactorNotFoundException(transportationDTO.getType()));
 
             totalTransportationEmission += transportationDTO.getMonthlyDistance() *
@@ -127,7 +157,7 @@ public class CarbonCalculationService {
 
     private void calculateSolidWasteEmissionFactor(CarbonCalculation carbonCalculation) {
         SolidWasteEmissionFactor solidWasteEmissionFactor = solidWasteEmissionFactorRepository
-                .findByUf(carbonCalculation.getUf())
+                .findById(carbonCalculation.getUf())
                 .orElseThrow(() -> new SolidWasteEmissionFactorNotFoundException(carbonCalculation.getUf()));
 
         double recyclePercentage = carbonCalculation.getRecyclePercentage();
