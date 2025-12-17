@@ -234,7 +234,7 @@ class CarbonCalculationServiceTest {
                 () -> carbonCalculationService.startCalculation(request)
         );
 
-        assertEquals("This phone number is shorter than 11 characters", exception.getMessage());
+        assertEquals("This phone number must be exactly 11 characters", exception.getMessage());
     }
 
     @Test

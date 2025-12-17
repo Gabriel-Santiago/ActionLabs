@@ -13,7 +13,7 @@ public class PhoneNumberValidator {
             throw new NullPhoneNumberException();
         }
 
-        if (phoneNumber.length() < 11) {
+        if (phoneNumber.length() != 11) {
             throw new InvalidPhoneNumberLengthException();
         }
 
