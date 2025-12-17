@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2025-12-17T14:46:03" hostname="GABRIEL" time="6.841">
+  <properties/>
+  <testcase name="getCarbonCalculationResult_NotFound_ShouldThrowCarbonCalculationNotFoundException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="5.66"/>
+  <testcase name="calculateEnergyEmissionFactor_UFNotFound_ShouldThrowEnergyEmissionFactorNotFoundException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.035"/>
+  <testcase name="updateInfo_ValidRequest_ShouldUpdateAndCalculate()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.143"/>
+  <testcase name="validateEmail_EmailAlreadyExists_ShouldThrowEmailAlreadyExists()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.054"/>
+  <testcase name="calculateEnergyEmissionFactor_ValidUF_ShouldCalculateCorrectly()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.02"/>
+  <testcase name="updateInfo_NegativeRecyclePercentage_ShouldThrowInvalidRecyclePercentageException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.033"/>
+  <testcase name="startCalculation_NullUf_ShouldThrowNullUfException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.023"/>
+  <testcase name="calculateTransportationEmissionFactor_NullList_ShouldSetZero()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.019"/>
+  <testcase name="calculateTransportationEmissionFactor_EmptyList_ShouldSetZero()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.017"/>
+  <testcase name="updateInfo_FullCalculation_ShouldCalculateAllEmissionsCorrectly()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.022"/>
+  <testcase name="calculateSolidWasteEmissionFactor_ValidData_ShouldCalculateCorrectly()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.016"/>
+  <testcase name="startCalculation_InvalidName_ShouldThrowNullNameException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.021"/>
+  <testcase name="startCalculation_NameTooShort_ShouldThrowInvalidNameLengthException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.02"/>
+  <testcase name="updateInfo_InvalidRecyclePercentage_ShouldThrowInvalidRecyclePercentageException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.031"/>
+  <testcase name="updateInfo_NoTransportation_ShouldCalculateZero()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.028"/>
+  <testcase name="startCalculation_UfTooLong_ShouldThrowInvalidUfLengthException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.024"/>
+  <testcase name="calculateSolidWasteEmissionFactor_UFNotFound_ShouldThrowSolidWasteEmissionFactorNotFoundException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.017"/>
+  <testcase name="startCalculation_InvalidEmail_ShouldThrowInvalidEmailException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.022"/>
+  <testcase name="[1] percentage=0.0" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.096"/>
+  <testcase name="[2] percentage=0.25" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.014"/>
+  <testcase name="[3] percentage=0.5" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.011"/>
+  <testcase name="[4] percentage=0.75" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.012"/>
+  <testcase name="[5] percentage=1.0" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.009"/>
+  <testcase name="startCalculation_PhoneNumberTooShort_ShouldThrowInvalidPhoneNumberLengthException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.015"/>
+  <testcase name="startCalculation_NullPhoneNumber_ShouldThrowNullPhoneNumberException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.013"/>
+  <testcase name="calculateTransportationEmissionFactor_TransportTypeNotFound_ShouldThrowTransportationEmissionFactorNotFoundException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.014"/>
+  <testcase name="startCalculation_UfTooShort_ShouldThrowInvalidUfLengthException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.017"/>
+  <testcase name="startCalculation_ValidRequest_ShouldReturnId()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.022"/>
+  <testcase name="startCalculation_InvalidPhoneNumber_ShouldThrowInvalidPhoneNumberException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.017"/>
+  <testcase name="updateInfo_CalculationNotFound_ShouldThrowCarbonCalculationNotFoundException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.013"/>
+  <testcase name="calculateTransportationEmissionFactor_ValidTransportation_ShouldCalculateCorrectly()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.011"/>
+  <testcase name="getCarbonCalculationResult_ValidId_ShouldReturnFormattedResult()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.019"/>
+  <testcase name="startCalculation_InvalidUf_ShouldThrowUpperCaseUfValidationException()" classname="br.com.actionlabs.carboncalc.service.CarbonCalculationServiceTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
