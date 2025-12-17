@@ -112,7 +112,7 @@ public class CarbonCalculationService {
         return carbonCalculationDTO;
     }
 
-    private void calculateEmissionFactor(CarbonCalculation carbonCalculation) {
+    protected void calculateEmissionFactor(CarbonCalculation carbonCalculation) {
         calculateEnergyEmissionFactor(carbonCalculation);
         calculateTransportationEmissionFactor(carbonCalculation);
         calculateSolidWasteEmissionFactor(carbonCalculation);
@@ -124,7 +124,7 @@ public class CarbonCalculationService {
         carbonCalculation.setTotalEmission(total);
     }
 
-    private void calculateEnergyEmissionFactor(CarbonCalculation carbonCalculation) {
+    protected void calculateEnergyEmissionFactor(CarbonCalculation carbonCalculation) {
         EnergyEmissionFactor energyEmissionFactor = energyEmissionFactorRepository
                 .findById(carbonCalculation.getUf())
                 .orElseThrow(() -> new EnergyEmissionFactorNotFoundException(carbonCalculation.getUf()));
@@ -133,7 +133,7 @@ public class CarbonCalculationService {
         carbonCalculation.setEnergyEmission(emission);
     }
 
-    private void calculateTransportationEmissionFactor(CarbonCalculation carbonCalculation) {
+    protected void calculateTransportationEmissionFactor(CarbonCalculation carbonCalculation) {
         List<TransportationDTO> transportationList = carbonCalculation.getTransportation();
 
         if (transportationList == null || transportationList.isEmpty()) {
@@ -155,7 +155,7 @@ public class CarbonCalculationService {
         carbonCalculation.setTransportationEmission(totalTransportationEmission);
     }
 
-    private void calculateSolidWasteEmissionFactor(CarbonCalculation carbonCalculation) {
+    protected void calculateSolidWasteEmissionFactor(CarbonCalculation carbonCalculation) {
         SolidWasteEmissionFactor solidWasteEmissionFactor = solidWasteEmissionFactorRepository
                 .findById(carbonCalculation.getUf())
                 .orElseThrow(() -> new SolidWasteEmissionFactorNotFoundException(carbonCalculation.getUf()));
@@ -166,7 +166,7 @@ public class CarbonCalculationService {
         carbonCalculation.setSolidWasteEmission(totalSolidWasteEmission);
     }
 
-    private static double getTotalSolidWasteEmission(CarbonCalculation carbonCalculation,
+    protected static double getTotalSolidWasteEmission(CarbonCalculation carbonCalculation,
                                                      double recyclePercentage,
                                                      SolidWasteEmissionFactor solidWasteEmissionFactor) {
         double solidWasteTotal = carbonCalculation.getSolidWasteProduction();
